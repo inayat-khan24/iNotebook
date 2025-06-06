@@ -1,11 +1,13 @@
 import express from "express"
+import { userModel } from "../mongoose/model/User.js"
+
 
 export  const router = express.Router()
 
-router.get('/',(req,res)=>{
-const obj = {
-    a :"thons",
-    age : 42
-}
-res.json(obj)
+//* create a user Using: Post "/api/auth". Doesn't required Auth
+router.post('/', async(req,res)=>{
+    console.log(req.body)
+ const user  = await userModel(req.body)
+ user.save()
+  res.status(201).json({success:true,user})
 })
